@@ -41,17 +41,19 @@
   border-radius: 50%; 
   border: none;
   padding: fixed;
+  position: fixed;
   right: 5%; 
   bottom: 10%; 
-  position: absolute; 
   display: flex; 
   align-items: center;
   justify-content: center;
-  }
+}
+
 .btnAdd:hover {
   background-color: #4b5aab;
   color: white;
 }
+
 
 .btnFuncoes {
   background-color: none;

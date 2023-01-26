@@ -28,10 +28,10 @@ export default function Tabela(props) {
     <Table>
       <thead>
         <tr className='head-tabela'>
-          <th>Dia</th>
-          <th>Descrição</th>
-          <th>Parcela</th>
-          <th>E/S</th>
+          <th>Dia <br />
+              Descrição</th>
+          <th>Parcela <br /> 
+              E/S</th>
           <th>Obs.</th>
           <th>Saldo</th>
           <th>Ações</th>
@@ -40,10 +40,10 @@ export default function Tabela(props) {
       <tbody>
         {filteredValores.map((e, i) => (
           <tr key={i}>
-            <td>{e.data}</td>
-            <td>{e.descricao}</td>
-            <td>{e.parcela}</td>
-            <td>{e.entrada}</td>
+            <td>{e.data} <br />
+                {e.descricao}</td>
+            <td>{e.parcela} <br />
+                {e.entrada}</td>
             <td>{e.observacao}</td>
             
             <td>{
