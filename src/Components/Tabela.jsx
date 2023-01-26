@@ -34,7 +34,7 @@ export default function Tabela(props) {
               E/S</th>
           <th>Obs.</th>
           <th>Saldo</th>
-          <th>Ações</th>
+          <th width='10%'>Ações</th>
         </tr>
       </thead>
       <tbody>
