@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Modal, Col, Row } from "react-bootstrap";
 import { AiFillEdit } from "react-icons/ai";
+import { Botoes } from "./Botoes";
 import FuncaoSalva from "./Funcoes/FuncaoSalva";
 
 export default function BotaoModal(props) {
@@ -75,7 +76,7 @@ export default function BotaoModal(props) {
             <Row>
               <Col>
                 <div className="form-group">
-                  <label htmlFor="description">
+                  <label htmlFor="description" className=" d-flex justify-content-between">
                     Descrição{" "}
                     <span className="valInvalido">
                       {!descricao ? "Digite a descrição." : ""}
@@ -92,7 +93,7 @@ export default function BotaoModal(props) {
               </Col>
               <Col>
                 <div className="form-group">
-                  <label htmlFor="valor">
+                  <label htmlFor="valor" className=" d-flex justify-content-between">
                     Valor{" "}
                     <span className="valInvalido">
                       {!valor ? "Digite um valor." : ""}
@@ -135,7 +136,10 @@ export default function BotaoModal(props) {
 
             <div className="form-group ">
               <label htmlFor="tipo">Entrada / Saída</label>
-              <select className="form-control entrada" onChange={handleInputEntrada}>
+              <select
+                className="form-control entrada"
+                onChange={handleInputEntrada}
+              >
                 <option value="0">Saída</option>
                 <option value="1">Entrada</option>
               </select>
@@ -143,7 +147,10 @@ export default function BotaoModal(props) {
 
             <div className="form-group ">
               <label htmlFor="tipo">Já esta pago?</label>
-              <select className="form-control quitado" onChange={handleInputQuitado}>
+              <select
+                className="form-control quitado"
+                onChange={handleInputQuitado}
+              >
                 <option value="0">Não</option>
                 <option value="1">Sim</option>
               </select>
@@ -160,17 +167,20 @@ export default function BotaoModal(props) {
             </div>
             <div className="form-group">
               {
-                props.funcao && props.funcao === "add" && (
+                props.funcao && (
                   <FuncaoSalva
-                    novo="sim"
-                    data={data}
-                    parcela={parcela}
-                    entrada={entrada}
-                    quitado={quitado}
-                    observacao={observacao}
+                  novo="sim"
+                  descricao={descricao}
+                  valor={valor}
+                  data={data}
+                  parcela={parcela}
+                  entrada={entrada}
+                  quitado={quitado}
+                  observacao={observacao}
                   />
-                ) // entrada nova uso post
-              }
+                  ) // entrada nova uso post
+                }
+                <Botoes funcao="del"></Botoes>
             </div>
           </form>
         </Modal.Body>

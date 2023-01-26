@@ -54,9 +54,9 @@ export default function Tabela(props) {
                 }
             </td>
             <td>
-              <BotaoModal funcao='edit'/>
-              <Botoes funcao='quitar'></Botoes>
-              <Botoes funcao='del'></Botoes>
+              <BotaoModal funcao='edit' id={e.id}/>
+              <Botoes funcao='quitar' id={e.id}></Botoes>
+              
             </td>
           </tr>
         ))}

@@ -2,8 +2,8 @@ import { BsCheckLg, BsFillTrashFill } from "react-icons/bs";
 
 export const Botoes = (props) => {
   
-  const quitar = () => {};
-  const del = () => {};
+  const quitar = () => {alert("Quitado com sucesso.")};
+  const del = () => {alert('deletado com sucesso.')};
   return (
     <>
 
@@ -13,7 +13,7 @@ export const Botoes = (props) => {
         </button>
       )}
       {props.funcao === "del" && (
-        <button className="btn btnFuncoes" onClick={del(props.id)}>
+        <button className="btn btnDel" onClick={del(props.id)}>
           {<BsFillTrashFill />}
         </button>
       )}
