@@ -25,7 +25,7 @@ export default function Tabela(props) {
   const filteredValores = valores
     .sort((a, b) => new Date(b.date) - new Date(a.date));
   return (
-    <Table>
+    <Table bordered>
       <thead>
         <tr className='head-tabela'>
           <th>Dia <br />
@@ -38,8 +38,9 @@ export default function Tabela(props) {
         </tr>
       </thead>
       <tbody>
-        {filteredValores.map((e, i) => (
-          <tr key={i}>
+        {filteredValores &&
+        filteredValores.map((e, i) => (
+          <tr key={i} className={e.quitado ? 'linhaQuitado' : ''}>
             <td>{e.data} <br />
                 {e.descricao}</td>
             <td>{e.parcela} <br />

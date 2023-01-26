@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Modal, Col, Row } from "react-bootstrap";
 import { AiFillEdit } from "react-icons/ai";
-import FuncaoSalva from './Funcoes/FuncaoSalva'
+import FuncaoSalva from "./Funcoes/FuncaoSalva";
 
 export default function BotaoModal(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -10,13 +10,17 @@ export default function BotaoModal(props) {
   };
 
   const [data, setData] = useState();
-  const [descricao, setDescricao] = useState('');
-  const [valor, setValor] = useState('');
-  const [parcela,  setParcela] = useState('');
-  const [entrada,  setEntrada] = useState();
-  const [quitado,  setQuitado] = useState();
+  const [descricao, setDescricao] = useState("");
+  const [valor, setValor] = useState("");
+  const [parcela, setParcela] = useState("");
+  const [entrada, setEntrada] = useState();
+  const [quitado, setQuitado] = useState();
   const [observacao, setObservacao] = useState();
 
+  function handleInputData(event) {
+    setData(0);
+    setData(event.target.value);
+  }
   function handleInputDescricao(event) {
     setDescricao(0);
     setDescricao(event.target.value);
@@ -48,7 +52,7 @@ export default function BotaoModal(props) {
     <>
       {props.funcao === "edit" && (
         <button className="btn btnFuncoes" onClick={openModal}>
-          <AiFillEdit/>
+          <AiFillEdit />
         </button>
       )}
       {props.funcao === "add" && (
@@ -67,38 +71,52 @@ export default function BotaoModal(props) {
           <Modal.Title className="title">Novo Lançamento</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form action="" >
-          <Row>
-            <Col>
-            <div className="form-group">
-              <label htmlFor="description">Descrição <span className="valInvalido">{!descricao ? 'Digite a descrição.':''}</span></label>
-              <input
-                type="text"
-                className="form-control descricao"
-                placeholder="Ex. Salário"
-                maxLength={50}
-                onChange={handleInputDescricao}
-                />
-            </div>
-                </Col>
-            <Col>
-            <div className="form-group">
-              <label htmlFor="valor">Valor <span className="valInvalido">{!valor ? 'Digite um valor.':''}</span></label>
-              <input
-                type="number"
-                className="form-control valor"
-                placeholder="Ex. Salário"
-                onChange={handleInputValor}
-                />
-            </div>
-                </Col>
-              </Row>
+          <form action="">
+            <Row>
+              <Col>
+                <div className="form-group">
+                  <label htmlFor="description">
+                    Descrição{" "}
+                    <span className="valInvalido">
+                      {!descricao ? "Digite a descrição." : ""}
+                    </span>
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control descricao"
+                    placeholder="Ex. Salário"
+                    maxLength={50}
+                    onChange={handleInputDescricao}
+                  />
+                </div>
+              </Col>
+              <Col>
+                <div className="form-group">
+                  <label htmlFor="valor">
+                    Valor{" "}
+                    <span className="valInvalido">
+                      {!valor ? "Digite um valor." : ""}
+                    </span>
+                  </label>
+                  <input
+                    type="number"
+                    className="form-control valor"
+                    placeholder="Ex. Salário"
+                    onChange={handleInputValor}
+                  />
+                </div>
+              </Col>
+            </Row>
             <Row>
               <Col>
                 <div className="form-group">
                   <label htmlFor="date">Data</label>
-                  <input type="date" className="form-control data" defaultValue={new Date().toISOString().slice(0, 10)} />
-
+                  <input
+                    type="date"
+                    className="form-control data"
+                    defaultValue={new Date().toISOString().slice(0, 10)}
+                    onChange={handleInputData}
+                  />
                 </div>
               </Col>
               <Col>
@@ -117,7 +135,7 @@ export default function BotaoModal(props) {
 
             <div className="form-group ">
               <label htmlFor="tipo">Entrada / Saída</label>
-              <select className="form-control entrada">
+              <select className="form-control entrada" onChange={handleInputEntrada}>
                 <option value="0">Saída</option>
                 <option value="1">Entrada</option>
               </select>
@@ -125,7 +143,7 @@ export default function BotaoModal(props) {
 
             <div className="form-group ">
               <label htmlFor="tipo">Já esta pago?</label>
-              <select className="form-control quitado">
+              <select className="form-control quitado" onChange={handleInputQuitado}>
                 <option value="0">Não</option>
                 <option value="1">Sim</option>
               </select>
@@ -141,12 +159,18 @@ export default function BotaoModal(props) {
               />
             </div>
             <div className="form-group">
-              {props.funcao && props.funcao === 'add' &&
-                <FuncaoSalva novo='sim'/> // entrada nova uso post
-              } 
-              {props.funcao && props.funcao === 'edit' &&
-                <FuncaoSalva novo='nao'/>
-              } 
+              {
+                props.funcao && props.funcao === "add" && (
+                  <FuncaoSalva
+                    novo="sim"
+                    data={data}
+                    parcela={parcela}
+                    entrada={entrada}
+                    quitado={quitado}
+                    observacao={observacao}
+                  />
+                ) // entrada nova uso post
+              }
             </div>
           </form>
         </Modal.Body>

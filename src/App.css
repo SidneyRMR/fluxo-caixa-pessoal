@@ -6,11 +6,12 @@
   flex-direction: column;
   color: white;
   align-items: center;
+  font-size: 15px;
   /* justify-content: center; */
 }
 
 .title {  
-  font-size: calc(15px + 2vmin);
+  font-size: 17px;
   font-weight: 500;
   width: 100%;
   margin: 2px;
@@ -22,7 +23,7 @@
   
 }
 .head-tabela, .btnSalva {  
-  font-size: calc(8px + 2vmin);
+  font-size: 10px;
   font-weight: 200;
   border-radius: 10px;
   width: 100%;
@@ -31,7 +32,10 @@
   background-color: #4b5aab; 
   color: white;
   border: none;
-  
+}
+
+.linhaQuitado {
+  background-color: #494c4a; 
 }
 
 .btnAdd {
