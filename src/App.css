@@ -1,23 +1,75 @@
 .App {
   text-align: center;
-  background: linear-gradient(to left, rgb(51, 47, 47), #c7b0b0);
+  background: linear-gradient(to left, rgb(51, 47, 47), #131838);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   color: white;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
 }
 
-.title {
-  
-  border: 1px solid #3D4886;
+.title {  
   font-size: calc(15px + 2vmin);
-  font-weight: bold;
-  border-radius: 10px;
-  width: 99%;
+  font-weight: 500;
+  width: 100%;
   margin: 2px;
   padding: 2px;
   background-color: #3D4886; 
+  color: white;
+  
+  border: none;
+  
+}
+.head-tabela, .btnSalva {  
+  font-size: calc(8px + 2vmin);
+  font-weight: 200;
+  border-radius: 10px;
+  width: 100%;
+  margin: 2px;
+  padding: 2px;
+  background-color: #4b5aab; 
+  color: white;
+  border: none;
+  
 }
 
+.btnAdd {
+  background-color: #3D4886;
+  font-weight: 700;
+  color: white;
+  border-radius: 50%; 
+  border: none;
+  padding: fixed;
+  right: 5%; 
+  bottom: 10%; 
+  position: absolute; 
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  }
+.btnAdd:hover {
+  background-color: #4b5aab;
+  color: white;
+}
+
+.btnFuncoes {
+  background-color: none;
+  color: white;
+}
+
+.btnFuncoes:hover {
+  background-color: #4b5aab;
+  color: white;
+}
+
+.btnSalva:hover {
+  background-color: #3D4886;
+  color: white;
+}
+
+.valInvalido {
+  color: red;
+  font-weight: 100;
+  align-items: right;
+}
