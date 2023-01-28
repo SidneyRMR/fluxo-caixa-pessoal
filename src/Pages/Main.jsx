@@ -11,7 +11,7 @@ export default function Principal() {
         <>
             <Tituto title='Fluxo de caixa pessoal'/>
             <Tabela/>
-            <BotaoModal funcao='add'/>
+            <BotaoModal funcao='addModal'/>
         </>
     )
 }

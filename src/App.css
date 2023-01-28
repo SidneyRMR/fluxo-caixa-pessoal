@@ -23,7 +23,7 @@
   border: none;
   
 }
-.head-tabela, .btnSalva {  
+.head-tabela {  
   font-size: 10px;
   font-weight: 200;
   border-radius: 10px;
@@ -35,31 +35,57 @@
   border: none;
 }
 
+.btnSalva {
+  border-radius: 20px;
+  width: 100%;
+  margin: 0px;
+  background-color: #4b5aab; 
+  color: white;
+  border: none; 
+  padding: 10px;
+  font-size: 15px;
+  font-weight: 300;
+  margin-top: 20px;
+}
+
+.body-tabela {
+  font-size: 10px;
+  font-weight: 100;
+  color: white;
+}
+
 .linhaQuitado {
   background-color: #494c4a; 
 }
 
 .btnAdd {
   background-color: #3D4886;
-  font-weight: 700;
+  font-size: 50px;
+  width: 50px;
+  height: 50px;
   color: white;
-  border-radius: 50%; 
+  border-radius: 50%;
   border: none;
-  padding: fixed;
+  padding: 15px;
   position: fixed;
-  right: 5%; 
-  bottom: 10%; 
-  display: flex; 
-  align-items: center;
-  justify-content: center;
-}
+  right: 10%;
+  bottom: 10%;
+  }
+
 
 .btnAdd:hover {
   background-color: #4b5aab;
   color: white;
 }
 
-
+.btn {
+  margin: 0;
+  padding: 3px;
+  padding-left: 5px;
+  /* size: 5px; */
+  border: none;
+  /* background-color: transparent; */
+}
 .btnFuncoes {
   background-color: none;
   color: white;
@@ -69,14 +95,7 @@
   background-color: #4b5aab;
   color: white;
 }
-.btnSalva {
-  padding: 10px;
-  font-size: 15px;
-  width: 88%;
-  border-radius: 20px;
-  margin-top: 20px;
-  margin-right: 3px;
-}
+
 .btnDel{
   padding: 10px;
   font-size: 15px;
