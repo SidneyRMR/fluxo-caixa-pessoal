@@ -30,7 +30,7 @@ export default function Tabela(props) {
     return new Date(a.data) - new Date(b.data);
   }
   const sortedData = dadosCaixa.sort(compareDates);
-  
+
   let somaAnterior = 0;
   return (
     <>
@@ -54,8 +54,13 @@ export default function Tabela(props) {
         <tbody className="body-tabela">
           {sortedData &&
             sortedData.map((e, i) => {
-              let soma = somaAnterior + (e.valor && e.somaAnterior ? e.valor + e.somaAnterior : e.valor);
+              let soma = 0
+              e.entrada === 0
+              ? soma = somaAnterior + (e.valor && e.somaAnterior ? e.valor + e.somaAnterior : e.valor) 
+              : soma = somaAnterior - (e.valor && e.somaAnterior ? e.valor - e.somaAnterior : e.valor) 
+
               somaAnterior = soma;
+
               return(
               <tr key={i} className={e.quitado ? "linhaQuitado" : ""}>
                 <td width='10%'>{e.data ? e.data.slice(0, -14) : "Não encontrada"}</td>
