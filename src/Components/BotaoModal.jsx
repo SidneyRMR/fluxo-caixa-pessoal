@@ -1,55 +1,71 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Modal, Col, Row } from "react-bootstrap";
 import { AiFillEdit } from "react-icons/ai";
-import FuncoesBotoes from "./Funcoes/FuncoesBotoes";
+import FuncaoBotoes from "./Funcoes/FuncoesBotoes";
 
 export default function BotaoModal(props) {
+
+  const valorInput = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const id = (props.obj ? props.obj.id : "")
+  const [data, setData] = useState()
+  const [descricao, setDescricao] = useState()
+  const [valor, setValor] = useState()
+  const [parcela, setParcela] = useState()
+  const [entrada, setEntrada] = useState()
+  const [quitado, setQuitado] = useState()
+  const [observacao, setObservacao] = useState()
+  
   const openModal = () => {
     setIsModalOpen(true);
+    setData(dataAtual().slice(0,-14))
+    setDescricao(props.obj? props.obj.descricao : "")
+    setValor(props.obj? props.obj.valor : "")
+    setParcela(props.obj? props.obj.parcela : 1)
+    setEntrada(props.obj ? props.obj.entrada : 0)
+    setQuitado(props.obj? props.obj.quitado : 0)
+    setObservacao(props.obj? props.obj.observacao : "")
+  };
+  const fechaModal = () => {
+    setIsModalOpen(false);
   };
 
-  const [id, setId] = useState(props.obj ? props.obj.id : "");
-  const [data, setData] = useState(props.obj ? props.obj.data : "");
-  const [descricao, setDescricao] = useState(
-    props.obj ? props.obj.descricao : ""
-  );
-  const [valor, setValor] = useState(props.obj ? props.obj.valor : "");
-  const [parcela, setParcela] = useState(props.obj ? props.obj.parcela : "");
-  const [entrada, setEntrada] = useState(props.obj ? props.obj.entrada : "");
-  const [quitado, setQuitado] = useState(props.obj ? props.obj.quitado : "");
-  const [observacao, setObservacao] = useState(
-    props.obj ? props.obj.observacao : ""
-  );
-
   function handleInputData(event) {
-    setData(0);
+
+    console.log(event.target.value)
     setData(event.target.value);
   }
   function handleInputDescricao(event) {
-    setDescricao(0);
+    console.log(event.target.value)
     setDescricao(event.target.value);
   }
   function handleInputValor(event) {
-    setValor(0);
+    console.log(event.target.value)
     setValor(event.target.value);
   }
   function handleInputParcela(event) {
-    setParcela(0);
+    console.log(event.target.value)
     setParcela(event.target.value);
   }
   function handleInputEntrada(event) {
-    setEntrada(0);
+    console.log(event.target.value)
     setEntrada(event.target.value);
   }
   function handleInputQuitado(event) {
-    setQuitado(0);
+    console.log(event.target.value)
     setQuitado(event.target.value);
   }
   function handleInputObservacao(event) {
-    setObservacao(0);
+    console.log(event.target.value)
     setObservacao(event.target.value);
   }
+
+  const dataAtual = () => {
+    // Obtém a data atual
+    let dataAtual = new Date().toISOString();
+    return `${dataAtual.toString()}`;
+  };
 
   return (
     <>
@@ -69,6 +85,7 @@ export default function BotaoModal(props) {
         onHide={() => {
           setIsModalOpen(false);
         }}
+        onEntered={() => valorInput.current.focus()}
       >
         <Modal.Header closeButton className="title">
           <Modal.Title className="title">Novo Lançamento</Modal.Title>
@@ -94,6 +111,7 @@ export default function BotaoModal(props) {
                     maxLength={50}
                     onChange={handleInputDescricao}
                     value={descricao}
+                    ref={valorInput}
                   />
                 </div>
               </Col>
@@ -126,7 +144,7 @@ export default function BotaoModal(props) {
                     type="date"
                     className="form-control data"
                     onChange={handleInputData}
-                    value={new Date().toISOString().slice(0, 10) || data}
+                    value={data || dataAtual()}
                   />
                 </div>
               </Col>
@@ -137,9 +155,8 @@ export default function BotaoModal(props) {
                     type="number"
                     className="form-control parcela"
                     placeholder="1"
-                    // defaultValue={1}
                     onChange={handleInputParcela}
-                    value={parcela || 1}
+                    value={parcela}
                   />
                 </div>
               </Col>
@@ -152,8 +169,8 @@ export default function BotaoModal(props) {
                 onChange={handleInputEntrada}
                 value={entrada}
               >
-                <option value="0">Saída</option>
-                <option value="1">Entrada</option>
+                <option value={0}>Saída</option>
+                <option value={1}>Entrada</option>
               </select>
             </div>
 
@@ -164,8 +181,8 @@ export default function BotaoModal(props) {
                 onChange={handleInputQuitado}
                 value={quitado}
               >
-                <option value="0">Não</option>
-                <option value="1">Sim</option>
+                <option value={0}>Não</option>
+                <option value={1}>Sim</option>
               </select>
             </div>
 
@@ -181,26 +198,19 @@ export default function BotaoModal(props) {
             </div>
             <div className="form-group">
               {id ? (
-                <FuncoesBotoes
+                <FuncaoBotoes
                   funcao="editar"
-                  descricao={descricao}
-                  valor={valor}
-                  data={data}
-                  parcela={parcela}
-                  entrada={entrada}
-                  quitado={quitado}
-                  observacao={observacao}
+                  obj={{id, descricao, valor, data, parcela, entrada, quitado, observacao}}
+                  fechaModal={fechaModal}
+                  renderizaAlter={props.renderizaAlter}
                 />
-              ) : (
-                <FuncoesBotoes
+              ) : ( 
+                <FuncaoBotoes
                   funcao="salvar"
-                  descricao={descricao}
-                  valor={valor}
-                  data={data}
-                  parcela={parcela}
-                  entrada={entrada}
-                  quitado={quitado}
-                  observacao={observacao}
+                  obj={{descricao, valor, data, parcela, entrada, quitado, observacao}}
+                  fechaModal={fechaModal}
+                  renderizaAlter={props.renderizaAlter}
+              
                 />
               )}
              

@@ -2,25 +2,68 @@ import { api } from "../../services/api";
 import { BsCheckLg, BsFillTrashFill } from "react-icons/bs";
 
 export default function FuncaoBotoes(props) {
+  const verificaValores = () => {
+    const { data, descricao, valor, parcela, entrada, quitado, observacao } =
+      props.obj;
 
-  const salvar = async () => {
-    // const id = props.id;
-    const descricao = props.obj.descricao;
-    const valor = props.obj.valor;
-    const data = props.obj.data;
-    const parcela = props.obj.parcela;
-    const entrada = props.obj.entrada;
-    const quitado = props.obj.quitado;
-    const observacao = props.obj.observacao;
-    console.log(
-    `Descricao: ${descricao}, 
-    Valor: ${descricao}, 
-    Data: ${data.slice(0,-14)}, 
-    Parcela: ${parcela}, 
-    Entrada: ${entrada}, 
-    Quitado: ${quitado}, 
-    Observacao: ${observacao}`
-    )
+    if (props.funcao === "salvar") {
+      console.log(
+        "salvar",
+        data,
+        descricao,
+        valor,
+        parcela,
+        entrada,
+        quitado,
+        observacao
+      );
+      salvar(data, descricao, valor, parcela, entrada, quitado, observacao);
+    } else if (props.funcao === "editar") {
+      const id = props.obj.id;
+      console.log(
+        "editar",
+        id,
+        data,
+        descricao,
+        valor,
+        parcela,
+        entrada,
+        quitado,
+        observacao
+      );
+      editar(id, data, descricao, valor, parcela, entrada, quitado, observacao);
+    } else if (props.funcao === "quitar") {
+      const id = props.obj.id;
+      console.log(
+        "quitar",
+        props.id,
+        data,
+        descricao,
+        valor,
+        parcela,
+        entrada,
+        quitado,
+        observacao
+      );
+      editar(id, data, descricao, valor, parcela, entrada, quitado, observacao);
+    } else if (props.funcao === "deletar") {
+      const id = props.id;
+      // console.log(id, data, descricao, valor, parcela, entrada, quitado, observacao)
+      deletar(id);
+    } else if (!props.funcao) {
+      console.log("Função inválida.");
+    }
+  };
+
+  const salvar = async (
+    data,
+    descricao,
+    valor,
+    parcela,
+    entrada,
+    quitado,
+    observacao
+  ) => {
     try {
       const res = await api.post("/dados-caixa", {
         data,
@@ -31,30 +74,33 @@ export default function FuncaoBotoes(props) {
         quitado,
         observacao,
       });
-      console.log(`Salvo com sucesso.`);
+      props.renderizaAlter();
+      props.fechaModal();
+      console.log("Salvo com sucesso.", res.data);
     } catch (error) {
       console.error(error);
+      alert("Ocorreu um erro ao salvar. Tente novamente.");
     }
-  }
+  };
 
-  const quitar = async () => {
-    const id = props.obj.id;
-    const descricao = props.obj.descricao;
-    const valor = props.obj.valor;
-    const data = props.obj.data;
-    const parcela = props.obj.parcela;
-    const entrada = props.obj.entrada;
-    const quitado = 1
-    const observacao = props.obj.observacao;
-    console.log(
-      `Descricao: ${descricao}, 
-      Valor: ${descricao}, 
-      Data: ${data.slice(0,-14)}, 
-      Parcela: ${parcela}, 
-      Entrada: ${entrada}, 
-      Quitado: ${quitado}, 
-      Observacao: ${observacao}`
-      )
+  const editar = async (
+    id,
+    data,
+    descricao,
+    valor,
+    parcela,
+    quitado,
+    entrada,
+    observacao
+  ) => {
+    // if (window.confirm("Tem certeza que deseja quitar a conta?")) {
+      console.log('antes',quitado);
+      if (props.funcao === "quitar") {
+        quitado = props.obj.quitado === 1 ? 0 : 1;
+        data = props.obj.data.slice(0,-14)
+      }
+      console.log('depois',quitado);
+
     try {
       const res = await api.put(`/dados-caixa/${id}`, {
         id,
@@ -66,80 +112,57 @@ export default function FuncaoBotoes(props) {
         quitado,
         observacao,
       });
-      console.log(`Quitado com sucesso.`);
+      props.renderizaAlter();
+      if (props.funcao === "salvar") {
+        props.fechaModal();
+      }
+      console.log("Editado com sucesso.", res.data);
+      return res.data;
     } catch (error) {
       console.error(error);
+      alert("Ocorreu um erro ao salvar. Tente novamente.");
     }
-  }
-  
-  const editar = async () => {
-    const id = props.obj.id;
-    const descricao = props.obj.descricao;
-    const valor = props.obj.valor;
-    const data = props.obj.data
-    const parcela = props.obj.parcela;
-    const entrada = props.obj.entrada;
-    const quitado = 1
-    const observacao = props.obj.observacao;
-    console.log(
-      `Descricao: ${descricao}, 
-      Valor: ${descricao}, 
-      Data: ${data.slice(0,-14)}, 
-      Parcela: ${parcela}, 
-      Entrada: ${entrada}, 
-      Quitado: ${quitado}, 
-      Observacao: ${observacao}`
-      )
-    try {
-      const res = await api.put(`/dados-caixa/${id}`, {
-        id,
-        descricao,
-        valor,
-        data,
-        parcela,
-        entrada,
-        quitado,
-        observacao,
-      });
-      console.log(`Editado com sucesso.`);
-    } catch (error) {
-      console.error(error);
-    }
-  }
+    // }
+  };
 
-  const deletar = async (ident) => {
+  const deletar = async () => {
     try {
-      const res = await api.delete(`/dados-caixa/${ident}`);
-      console.log(`Exclusão do lançamento ${ident} realizada com sucesso`);
+      const res = await api.delete(`/dados-caixa/${props.id}`);
+      props.renderizaAlter();
+      console.log(
+        `Exclusão do lançamento ${props.obj.descricao} realizada com sucesso`
+      );
+      return res.data;
     } catch (error) {
       console.error(error);
+      alert("Ocorreu um erro ao deletar. Tente novamente.");
     }
-  }
+  };
 
   return (
     <>
       {props.funcao === "salvar" && (
-        <button className="btnSalva" onClick={() => salvar()}>
-          Salvar
-        </button>
+        <div className="btn btnSalva" onClick={() => verificaValores()}>
+          Salvar novo
+        </div>
       )}
 
       {props.funcao === "editar" && (
-        <button className="btnSalva" onClick={() => editar()}>
-          Salvar
-        </button>
+        <div className="btn btnSalva" onClick={() => verificaValores()}>
+          Salvar edição
+        </div>
       )}
 
       {props.funcao === "quitar" && (
-        <button className="btn btnFuncoes" onClick={() => quitar()}>
+        <div className="btn btnFuncoes" onClick={() => verificaValores()}>
           {<BsCheckLg />}
-        </button>
+        </div>
       )}
 
-      {props.funcao === "delelar" && (
-        <button className="btn btnDel" onClick={() => deletar(props.id)}>
+      {props.funcao === "deletar" && (
+        <div className="btn btnFuncoes" onClick={() => verificaValores()}>
           {<BsFillTrashFill />}
-        </button>
+        </div>
       )}
     </>
   );
