@@ -94,8 +94,10 @@ export default function FuncaoBotoes(props) {
         const novaData = new Date(data);
         novaData.setMonth(novaData.getMonth() + i);
   
+        const dataFormatada = `${novaData.getFullYear()}-${novaData.getMonth() + 1}-${novaData.getDate()}`;
+  
         await api.post("/dados-caixa", {
-          data: novaData,
+          data: dataFormatada,
           descricao,
           valor,
           parcela,

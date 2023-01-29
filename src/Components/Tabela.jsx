@@ -35,7 +35,7 @@ export default function Tabela(props) {
   };
 
   function compareDates(a, b) {
-    return new Date(a.date) - new Date(b.date);
+    return new Date(a.data) - new Date(b.data);
   }
   const sortedData = dadosCaixa.sort(compareDates);
 
@@ -52,10 +52,8 @@ export default function Tabela(props) {
           <tr className="head-tabela">
             <th>Dia </th>
             <th>Descrição</th>
-            <th>
-              Parcela <br />
-              E/S
-            </th>
+            <th>Parcelas</th>
+            <th>E/S</th>
             {/* <th width="15%">Obs.</th> */}
             <th>Saldo</th>
             <th width="22%">Ações</th>
@@ -65,13 +63,10 @@ export default function Tabela(props) {
           {sortedData &&
             sortedData.map((e, i) => (
               <tr key={i} className={e.quitado ? "linhaQuitado" : ""}>
-                <td>{e.data ? e.data.slice(0, -14) : "Não encontrada"}</td>
+                <td width='10%'>{e.data ? e.data.slice(0, -14) : "Não encontrada"}</td>
                 <td>{e.descricao}</td>
-                <td>
-                  {e.parcela}
-                  <br />
-                  {e.valor}
-                </td>
+                <td width='5%'>{e.parcela}</td>
+                <td>{e.valor}</td>
                 {/* <td>{e.observacao}</td> */}
                 <td>{somatoriaEntradas}</td>
                 <td>
