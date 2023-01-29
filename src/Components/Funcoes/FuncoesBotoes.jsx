@@ -5,53 +5,78 @@ export default function FuncaoBotoes(props) {
   const verificaValores = () => {
     const { data, descricao, valor, parcela, entrada, quitado, observacao } =
       props.obj;
-
-    if (props.funcao === "salvar") {
-      console.log(
-        "salvar",
-        data,
-        descricao,
-        valor,
-        parcela,
-        entrada,
-        quitado,
-        observacao
+    if (parcela < 1) {
+      return (
+        <div className="alert alert-danger" role="alert">
+          <strong>Erro!</strong> Valor da parcela deve ser maior que 0
+        </div>
       );
-      salvar(data, descricao, valor, parcela, entrada, quitado, observacao);
-    } else if (props.funcao === "editar") {
-      const id = props.obj.id;
-      console.log(
-        "editar",
-        id,
-        data,
-        descricao,
-        valor,
-        parcela,
-        entrada,
-        quitado,
-        observacao
-      );
-      editar(id, data, descricao, valor, parcela, entrada, quitado, observacao);
-    } else if (props.funcao === "quitar") {
-      const id = props.obj.id;
-      console.log(
-        "quitar",
-        props.id,
-        data,
-        descricao,
-        valor,
-        parcela,
-        entrada,
-        quitado,
-        observacao
-      );
-      editar(id, data, descricao, valor, parcela, entrada, quitado, observacao);
-    } else if (props.funcao === "deletar") {
-      const id = props.id;
-      // console.log(id, data, descricao, valor, parcela, entrada, quitado, observacao)
-      deletar(id);
-    } else if (!props.funcao) {
-      console.log("Função inválida.");
+    } else {
+      if (props.funcao === "salvar") {
+        console.log(
+          "salvar",
+          data,
+          descricao,
+          valor,
+          parcela,
+          entrada,
+          quitado,
+          observacao
+        );
+        salvar(data, descricao, valor, parcela, entrada, quitado, observacao);
+      } else if (props.funcao === "editar") {
+        const id = props.obj.id;
+        console.log(
+          "editar",
+          id,
+          data,
+          descricao,
+          valor,
+          parcela,
+          entrada,
+          quitado,
+          observacao
+        );
+        editar(
+          id,
+          data,
+          descricao,
+          valor,
+          parcela,
+          entrada,
+          quitado,
+          observacao
+        );
+      } else if (props.funcao === "quitar") {
+        const id = props.obj.id;
+        console.log(
+          "quitar",
+          id,
+          data,
+          descricao,
+          valor,
+          parcela,
+          entrada,
+          quitado,
+          observacao
+        );
+        editar(
+          id,
+          data,
+          descricao,
+          valor,
+          parcela,
+          entrada,
+          quitado,
+          observacao
+        );
+      } else if (props.funcao === "deletar") {
+        const id = props.id;
+        // console.log(id, data, descricao, valor, parcela, entrada, quitado, observacao)
+        deletar(id);
+      } else if (!props.funcao) {
+        console.log("Função inválida.");
+      }
     }
   };
 
@@ -65,23 +90,29 @@ export default function FuncaoBotoes(props) {
     observacao
   ) => {
     try {
-      const res = await api.post("/dados-caixa", {
-        data,
-        descricao,
-        valor,
-        parcela,
-        entrada,
-        quitado,
-        observacao,
-      });
+      for (let i = 0; i < parcela; i++) {
+        const novaData = new Date(data);
+        novaData.setMonth(novaData.getMonth() + i);
+  
+        await api.post("/dados-caixa", {
+          data: novaData,
+          descricao,
+          valor,
+          parcela,
+          entrada,
+          quitado,
+          observacao,
+        });
+      }
       props.renderizaAlter();
       props.fechaModal();
-      console.log("Salvo com sucesso.", res.data);
+      console.log("Salvo com sucesso.");
     } catch (error) {
       console.error(error);
       alert("Ocorreu um erro ao salvar. Tente novamente.");
     }
   };
+  
 
   const editar = async (
     id,
@@ -89,17 +120,17 @@ export default function FuncaoBotoes(props) {
     descricao,
     valor,
     parcela,
-    quitado,
     entrada,
+    quitado,
     observacao
   ) => {
     // if (window.confirm("Tem certeza que deseja quitar a conta?")) {
-      console.log('antes',quitado);
-      if (props.funcao === "quitar") {
-        quitado = props.obj.quitado === 1 ? 0 : 1;
-        data = props.obj.data.slice(0,-14)
-      }
-      console.log('depois',quitado);
+    console.log("antes", quitado);
+    if (props.funcao === "quitar") {
+      quitado = quitado === 1 ? 0 : 1;
+      data = data.slice(0, -14);
+    }
+    console.log("depois", quitado);
 
     try {
       const res = await api.put(`/dados-caixa/${id}`, {
