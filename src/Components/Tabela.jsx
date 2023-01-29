@@ -58,7 +58,7 @@ export default function Tabela(props) {
             </th>
             {/* <th width="15%">Obs.</th> */}
             <th>Saldo</th>
-            <th width="20%">Ações</th>
+            <th width="22%">Ações</th>
           </tr>
         </thead>
         <tbody className="body-tabela">
