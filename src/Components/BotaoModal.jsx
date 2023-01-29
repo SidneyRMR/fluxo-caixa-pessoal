@@ -29,6 +29,13 @@ export default function BotaoModal(props) {
   };
   const fechaModal = () => {
     setIsModalOpen(false);
+    setData('')
+    setDescricao('')
+    setValor('')
+    setParcela('')
+    setEntrada('')
+    setQuitado('')
+    setObservacao('')
   };
 
   function handleInputData(event) {

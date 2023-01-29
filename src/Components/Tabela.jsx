@@ -34,66 +34,71 @@ export default function Tabela(props) {
     props.setIsModalOpen(false);
   };
 
+  function compareDates(a, b) {
+    return new Date(a.date) - new Date(b.date);
+  }
+  const sortedData = dadosCaixa.sort(compareDates);
+
+
   return (
     <>
-    
-    <BotaoModal funcao='addModal'                   renderizaAlter={getDadosCaixa}
-                  fechaModal={fechaModal}/>
-    <Table bordered>
-      <thead>
-        <tr className="head-tabela">
-          <th>Dia </th>
-          <th>Descrição</th>
-          <th>
-            Parcela <br />
-            E/S
-          </th>
-          <th width='15%'>Obs.</th>
-          <th>Saldo</th>
-          <th width="15%">Ações</th>
-        </tr>
-      </thead>
-      <tbody className="body-tabela">
-        {dadosCaixa &&
-          dadosCaixa.map((e, i) => (
-            <tr key={i} className={e.quitado ? "linhaQuitado" : ""}>
-              <td>{e.data ? e.data.slice(0, -14) : "Não encontrada"}</td>
-              <td>{e.descricao}</td>
-              <td>
-                {e.parcela}
-                <br />
-                {e.valor}
-              </td>
-              <td>{e.observacao}</td>
-              <td>{somatoriaEntradas}</td>
-              <td>
-                <BotaoModal
-                  className="btnTabela"
-                  funcao="editModal"
-                  id={e.id}
-                  obj={e}
-                  renderizaAlter={getDadosCaixa}
-                  fechaModal={fechaModal}
-                />
-                <FuncaoBotoes
-                  className="btnTabela"
-                  funcao="quitar"
-                  id={e.id}
-                  obj={e}
-                  renderizaAlter={getDadosCaixa}
-                />
-                <FuncaoBotoes
-                  className="btnTabela"
-                  funcao="deletar"
-                  id={e.id}
-                  obj={e}
-                  renderizaAlter={getDadosCaixa}
-                />
-              </td>
-            </tr>
-          ))}
-      </tbody>
-    </Table>
+      <BotaoModal
+        funcao="addModal"
+        renderizaAlter={getDadosCaixa}
+        fechaModal={fechaModal}
+      />
+      <Table bordered>
+        <thead>
+          <tr className="head-tabela">
+            <th>Dia </th>
+            <th>Descrição</th>
+            <th>
+              Parcela <br />
+              E/S
+            </th>
+            {/* <th width="15%">Obs.</th> */}
+            <th>Saldo</th>
+            <th width="20%">Ações</th>
+          </tr>
+        </thead>
+        <tbody className="body-tabela">
+          {sortedData &&
+            sortedData.map((e, i) => (
+              <tr key={i} className={e.quitado ? "linhaQuitado" : ""}>
+                <td>{e.data ? e.data.slice(0, -14) : "Não encontrada"}</td>
+                <td>{e.descricao}</td>
+                <td>
+                  {e.parcela}
+                  <br />
+                  {e.valor}
+                </td>
+                {/* <td>{e.observacao}</td> */}
+                <td>{somatoriaEntradas}</td>
+                <td>
+                  <BotaoModal
+                    funcao="editModal"
+                    id={e.id}
+                    obj={e}
+                    renderizaAlter={getDadosCaixa}
+                    fechaModal={fechaModal}
+                  />
+                  <FuncaoBotoes
+                    funcao="quitar"
+                    id={e.id}
+                    obj={e}
+                    renderizaAlter={getDadosCaixa}
+                  />
+                  <FuncaoBotoes
+                    funcao="deletar"
+                    id={e.id}
+                    obj={e}
+                    renderizaAlter={getDadosCaixa}
+                  />
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </Table>
     </>
   );
 }
