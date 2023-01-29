@@ -90,10 +90,10 @@ export default function FuncaoBotoes(props) {
     observacao
   ) => {
     try {
-      for (let i = 0; i < parcela; i++) {
+      for (let i = 0; i <= parcela; i++) {
         const novaData = new Date(data);
         novaData.setMonth(novaData.getMonth() + i);
-  
+        parcela = parcela - i 
         const dataFormatada = `${novaData.getFullYear()}-${novaData.getMonth() + 1}-${novaData.getDate()}`;
   
         await api.post("/dados-caixa", {

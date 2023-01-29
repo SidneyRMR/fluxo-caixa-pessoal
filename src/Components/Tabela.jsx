@@ -5,7 +5,7 @@ import FuncaoBotoes from "./Funcoes/FuncoesBotoes";
 import { api } from "../services/api";
 
 export default function Tabela(props) {
-  const [somatoriaEntradas, setSomatoriaEntradas] = useState(0);
+  // const [somatoriaEntradas, setSomatoriaEntradas] = useState(0);
   const [dadosCaixa, setDadosCaixa] = useState([]);
 
   const getDadosCaixa = async () => {
@@ -30,7 +30,8 @@ export default function Tabela(props) {
     return new Date(a.data) - new Date(b.data);
   }
   const sortedData = dadosCaixa.sort(compareDates);
-
+  
+  let somaAnterior = 0;
   return (
     <>
       <BotaoModal
@@ -53,8 +54,8 @@ export default function Tabela(props) {
         <tbody className="body-tabela">
           {sortedData &&
             sortedData.map((e, i) => {
-              // setSomatoriaEntradas(somatoriaEntradas + e.valor);
-              let soma = +somatoriaEntradas + +e.valor
+              let soma = somaAnterior + (e.valor && e.somaAnterior ? e.valor + e.somaAnterior : e.valor);
+              somaAnterior = soma;
               return(
               <tr key={i} className={e.quitado ? "linhaQuitado" : ""}>
                 <td width='10%'>{e.data ? e.data.slice(0, -14) : "Não encontrada"}</td>

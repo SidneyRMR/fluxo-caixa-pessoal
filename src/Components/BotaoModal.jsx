@@ -19,13 +19,13 @@ export default function BotaoModal(props) {
   
   const openModal = () => {
     setIsModalOpen(true);
-    setData(dataAtual().slice(0,-14))
-    setDescricao(props.obj? props.obj.descricao : "")
-    setValor(props.obj? props.obj.valor : "")
-    setParcela(props.obj? props.obj.parcela : 1)
+    setData(props.obj.data ? props.obj.data.slice(0,-14) : dataAtual().slice(0,-14))
+    setDescricao(props.obj ? props.obj.descricao : "")
+    setValor(props.obj ? props.obj.valor : "")
+    setParcela(props.obj ? props.obj.parcela : 1)
     setEntrada(props.obj ? props.obj.entrada : 0)
-    setQuitado(props.obj? props.obj.quitado : 0)
-    setObservacao(props.obj? props.obj.observacao : "")
+    setQuitado(props.obj ? props.obj.quitado : 0)
+    setObservacao(props.obj ? props.obj.observacao : "")
   };
   const fechaModal = () => {
     setIsModalOpen(false);
@@ -113,7 +113,7 @@ export default function BotaoModal(props) {
                   </label>
                   <input
                     type="text"
-                    className="form-control descricao"
+                    className="form-control"
                     placeholder="Ex. Salário"
                     maxLength={50}
                     onChange={handleInputDescricao}
@@ -135,7 +135,7 @@ export default function BotaoModal(props) {
                   </label>
                   <input
                     type="number"
-                    className="form-control valor"
+                    className="form-control"
                     placeholder="Ex. 1000"
                     onChange={handleInputValor}
                     value={valor}
@@ -160,7 +160,7 @@ export default function BotaoModal(props) {
                   <label htmlFor="installments">Parcela</label>
                   <input
                     type="number"
-                    className="form-control parcela"
+                    className="form-control"
                     placeholder="1"
                     onChange={handleInputParcela}
                     value={parcela}
@@ -172,19 +172,19 @@ export default function BotaoModal(props) {
             <div className="form-group ">
               <label htmlFor="tipo">Entrada / Saída</label>
               <select
-                className="form-control entrada"
+                className="form-control"
                 onChange={handleInputEntrada}
                 value={entrada}
               >
-                <option value={0}>Saída</option>
-                <option value={1}>Entrada</option>
+                <option className="saida" value={0}>Saída</option>
+                <option className="entrada" value={1}>Entrada</option>
               </select>
             </div>
 
             <div className="form-group ">
               <label htmlFor="tipo">Já esta pago?</label>
               <select
-                className="form-control quitado"
+                className="form-control"
                 onChange={handleInputQuitado}
                 value={quitado}
               >
