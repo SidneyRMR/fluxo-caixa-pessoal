@@ -115,3 +115,12 @@ table {
   align-items: right;
   font-size: 10px;
 }
+
+.entrada{
+  color: rgb(60, 146, 60);
+  font-weight: 500;
+}
+.saida {
+  color:rgb(166, 29, 29);
+  font-weight: 500;
+}

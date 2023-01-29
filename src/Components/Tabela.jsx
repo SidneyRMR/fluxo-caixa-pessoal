@@ -20,14 +20,6 @@ export default function Tabela(props) {
     getDadosCaixa();
   }, [setDadosCaixa, props.renderizaAlter]);
 
-  useEffect(() => {
-    let soma = 0;
-    dadosCaixa.forEach((e) => {
-      soma += e.entrada;
-    });
-    setSomatoriaEntradas(soma);
-  }, [dadosCaixa]);
-
   // const [isModalOpen, setIsModalOpen] = useState(false);
 
   const fechaModal = () => {
@@ -38,7 +30,6 @@ export default function Tabela(props) {
     return new Date(a.data) - new Date(b.data);
   }
   const sortedData = dadosCaixa.sort(compareDates);
-
 
   return (
     <>
@@ -61,14 +52,17 @@ export default function Tabela(props) {
         </thead>
         <tbody className="body-tabela">
           {sortedData &&
-            sortedData.map((e, i) => (
+            sortedData.map((e, i) => {
+              // setSomatoriaEntradas(somatoriaEntradas + e.valor);
+              let soma = +somatoriaEntradas + +e.valor
+              return(
               <tr key={i} className={e.quitado ? "linhaQuitado" : ""}>
                 <td width='10%'>{e.data ? e.data.slice(0, -14) : "Não encontrada"}</td>
-                <td>{e.descricao}</td>
+                <td>{e.descricao}</td>  
                 <td width='5%'>{e.parcela}</td>
-                <td>{e.valor}</td>
+                <td className={e.entrada ? 'entrada': 'saida'}>{e.valor ? e.valor.toFixed(2) : ''}</td>
                 {/* <td>{e.observacao}</td> */}
-                <td>{somatoriaEntradas}</td>
+                <td className={soma > 0 ? 'entrada': 'saida'}>{soma ? soma.toFixed(2): ''}</td>
                 <td>
                   <BotaoModal
                     funcao="editModal"
@@ -91,7 +85,7 @@ export default function Tabela(props) {
                   />
                 </td>
               </tr>
-            ))}
+            )})}
         </tbody>
       </Table>
     </>
